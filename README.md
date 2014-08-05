@@ -28,7 +28,7 @@ Install all the modules used by project by using `npm install`
 Create the database that will hold all the user and checkbook information. There should already be a script in the db/ directory that will do the work for you. Run it by executing this command:
 ```
 $ cd db
-$ sqlite3 sqlite.db < create.db
+$ sqlite3 sqlite.db < create.sql
 ```
 
 From the root of the project directory run `./bin/www`, this will start the web server listening on port 3000 of localhost.
