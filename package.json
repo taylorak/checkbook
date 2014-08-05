@@ -1,0 +1,21 @@
+{
+  "name": "checkbook",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "body-parser": "~1.0.0",
+    "cookie-parser": "~1.0.1",
+    "debug": "~0.7.4",
+    "express": "~4.2.0",
+    "express-session": "^1.7.2",
+    "hogan-express": "^0.5.2",
+    "less-middleware": "1.0.x",
+    "morgan": "~1.0.0",
+    "sha1": "^1.1.0",
+    "sqlite3": "^2.2.4",
+    "static-favicon": "~1.0.0"
+  }
+}
