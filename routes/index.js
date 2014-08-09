@@ -31,6 +31,8 @@ router.route('/')
         var amount = (req.body.amount * 100).toFixed(0);
         var memo = req.body.memo;
         var category = req.body.category;
+
+        if(isNaN(amount)) console.log("Not a Number");
         var stm = "INSERT INTO checkbook_entry(user_id, date, payee,"
             + " amount, memo, category) VALUES (" + user_id + ", "
             + date + ", '" + payee + "', " + amount + ", '"
