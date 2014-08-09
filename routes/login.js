@@ -17,6 +17,10 @@ router.route('/')
         req.db.get(stm, function(err, row) {
             if (err) return next(err);
             if(row) {
+                for(var key in row) {
+                    console.log(row[key]);
+                    console.log(key);
+                }
                 req.session.uid = row.user_id;
                 res.redirect('/');
             } else {

@@ -23,7 +23,7 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
-app.set('partials', {messages: 'partials/messages'});
+app.set('partials', {messages: 'partials/messages', navbar: 'partials/navbar'});
 app.engine('html', require('hogan-express'));
 
 app.use(favicon());
@@ -45,7 +45,6 @@ app.use(function(req, res, next) {
     next();
 });
 
-app.use('/', routes);
 app.use('/login', login);
 app.get('/logout', function(req, res, next) {
     req.session.destroy(function(err) {
@@ -53,13 +52,14 @@ app.get('/logout', function(req, res, next) {
         res.redirect('/login');
     })
 })
+app.use('/', routes);
 
 /// catch 404 and forward to error handler
-app.use(function(req, res, next) {
+/**app.use(function(req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
-});
+});**/
 
 /// error handlers
 

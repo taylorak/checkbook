@@ -18,14 +18,78 @@
             <![endif]-->
     </head>
     <body>
+        {{> navbar }}
         <div class="container">
-            <h3>Logged In!</h3>
-            <a href="/logout">Logout</a>
-        </div> <!-- /container -->
+            <div class="col-md-3">
+                <ul class="nav nav-pills nav-stacked">
+                    <li {{ all }}><a href="/">All</a></li>
+                    <li {{ deposit }}><a href="/deposit">Deposit</a></li>
+                    <li {{ withdraw }}><a href="/withdraw">Withdrawl</a></li>
+                    <li {{ transfer }}><a href="/transfer">Transfer</a></li>
+                </ul>
+            </div>
+
+            <div class="col-md-9">
+                <form class="form-signin" role="form" action="/" method="post">
+                    <fieldset>
+                        <div class="form-group row" >
+                            <div class="col-md-8">
+                                <label for="payee">Payee</label>
+                                <input name="payee" id="payee" type="text" class="form-control" placeholder="Payee" required> 
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="amount">Amount</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">$</span>
+                                    <input name="amount" id="amount" type="text" class="form-control" placeholder="100.00" required> 
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group row" >
+                            <div class="col-md-9">
+                                <label for="amount">Memo</label>
+                                <input name="memo" id="memo" type="text" class="form-control" placeholder="Memo" required>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label for="category">Category</label>
+                                <select name="category" id="category" class="form-control">
+                                    <option value="deposit">Deposit</option>
+                                    <option value="transfer">Transfer</option>
+                                    <option value="withdraw">Withdraw</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <input id="submitLogin" class="btn btn-lg btn-primary btn-block" type="submit" value="Submit">
+                    </fieldset>
+                </form>
+                <hr/>
+
+                {{^ rows }}
+                <div class="col-md-12 well text-center">
+                    <h3>No entries</h3>
+                </div>
+                {{/ rows }}
+
+                {{# rows }}
+                <div class="col-md-12 well">
+                    {{ date }} {{ payee }} {{ amount }} {{{ memo }}} {{ category }}
+                </div>
+                {{/ rows}}
+            </div>
+        </div>
 
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <!-- Include all compiled plugins (below), or include individual files as needed -->
         <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+        <script>
+$( "#date" ).datepicker();
+        </script>
+
     </body>
 </html>
