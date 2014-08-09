@@ -10,6 +10,8 @@
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <!--<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootswatch/3.0.0/amelia/bootstrap.min.css">-->
 
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -75,11 +77,38 @@
                 </div>
                 {{/ rows }}
 
+
+                {{# entries }}
+                <table class="table table-striped">
+                    <thead>
+                        <th class="col-md-3">Payee</th>
+                        <th class="col-md-2">Amount</th>
+                        <th class="col-md-2">Category</th>
+                        <th class="col-md-4">Memo</th>
+                        <th class="col-md-1 text-center">Dlt</th>
+                    </thead>
+                    <tbody>
+                {{/ entries }}
+
+                
                 {{# rows }}
-                <div class="col-md-12 well">
-                    {{ date }} {{ payee }} {{ amount }} {{{ memo }}} {{ category }}
-                </div>
+                <!--<div class="col-md-12 well">-->
+                    <!--{{ date }} {{ payee }} {{ amount }} {{{ memo }}} {{ category }}-->
+                <!--</div>-->
+                <tr>
+                    <td class="col-md-3">{{ payee }}</td>
+                    <td class="col-md-2">{{ amount }}</td>
+                    <td class="col-md-2">{{ category }}</td>
+                    <td class="col-md-4">{{{ memo }}}</td>
+                    <td class="col-md-1 text-center"><a class="text-danger" href="/delete/{{ entry_id }}"><span class="glyphicon glyphicon-minus-sign"></span></a></td>
+                </tr>
                 {{/ rows}}
+
+                {{# entries }}
+                    </tbody>
+                </table>
+                {{/entries }}
+
             </div>
         </div>
 

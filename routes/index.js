@@ -7,13 +7,15 @@ router.route('/')
 
     /* GET home page. */
     .get(auth, function(req, res, next) {
+        var entries = false;
         var all = 'class=active';
-        var stm = "SELECT payee, amount, memo, category FROM checkbook_entry WHERE user_id='"
-            + req.session.uid + "'";
+        var stm = "SELECT * FROM checkbook_entry WHERE user_id='"
+            + req.session.uid + "' ORDER BY date DESC;";
         console.log(stm);
         req.db.all(stm, function(err, rows) {
             if(err) return next(err);
-            res.render('index', { title: 'Checkbook', rows: rows, all: all});
+            if(rows.length > 0) entries = true;
+            res.render('index', { title: 'Checkbook', entries: entries, rows: rows, all: all});
         });
     })
 
@@ -33,11 +35,24 @@ router.route('/')
         res.redirect('back');
     })
 
+router.get('/delete/:id', auth, function(req, res, next) {
+    var stm = "DELETE FROM checkbook_entry WHERE entry_id='"
+        + req.params.id + "';";
+    console.log(stm);
+    req.db.run(stm,function(err) {
+        if(err) return next(err);
+        res.redirect('/');
+    });
+})
+
 router.get('/:type', auth, function(req, res, next) {
     console.log(req.params.type);
+
     var deposit;
     var transfer;
     var withdraw;
+    var entries = false;
+
     if (req.params.type == "deposit") {
        deposit = 'class=active';
     } else if (req.params.type == "transfer") {
@@ -45,17 +60,15 @@ router.get('/:type', auth, function(req, res, next) {
     }else if (req.params.type == "withdraw") {
        withdraw = 'class=active';
     }
-    console.log(deposit);
-    console.log(transfer);
-    console.log(withdraw);
-
 
     var stm = "SELECT * FROM checkbook_entry WHERE user_id='"
-        + req.session.uid + "' AND category='" + req.params.type + "'";
+        + req.session.uid + "' AND category='" + req.params.type + "' ORDER BY date DESC;";
     console.log(stm);
     req.db.all(stm, function(err, rows) {
         if(err) return next(err);
-        res.render('index', { title: 'Checkbook-' + req.params.type, rows: rows, deposit: deposit, transfer: transfer, withdraw: withdraw });
+        if(rows.length > 0) entries = true;
+        res.render('index', { title: 'Checkbook', entries: entries, 
+            rows: rows, deposit: deposit, transfer: transfer, withdraw: withdraw });
     });
 
 })
