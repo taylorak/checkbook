@@ -15,7 +15,12 @@ router.route('/')
         req.db.all(stm, function(err, rows) {
             if(err) return next(err);
             if(rows.length > 0) entries = true;
-            res.render('index', { title: 'Checkbook', entries: entries, rows: rows, all: all});
+            var balance = 0;
+            for(var i=0; i < rows.length; i++) {
+                rows[i].amount = (rows[i].amount*1.0/100).toFixed(2);
+                balance += rows[i].amount
+            }
+            res.render('index', { title: 'Checkbook', entries: entries, rows: rows, all: all, balance: balance});
         });
     })
 
@@ -31,8 +36,10 @@ router.route('/')
             + date + ", '" + payee + "', " + amount + ", '"
             + memo + "', '" + category + "');";
         console.log(stm);
-        req.db.run(stm);
-        res.redirect('back');
+        req.db.run(stm, function(err) {
+            if(err) return next(err);
+            res.redirect('back');
+        });
     })
 
 router.get('/delete/:id', auth, function(req, res, next) {
@@ -67,8 +74,13 @@ router.get('/:type', auth, function(req, res, next) {
     req.db.all(stm, function(err, rows) {
         if(err) return next(err);
         if(rows.length > 0) entries = true;
+        var balance = 0;
+        for(var i=0; i < rows.length; i++) {
+            rows[i].amount = (rows[i].amount*1.0/100).toFixed(2);
+            balance += rows[i].amount
+        }
         res.render('index', { title: 'Checkbook', entries: entries, 
-            rows: rows, deposit: deposit, transfer: transfer, withdraw: withdraw });
+            rows: rows, deposit: deposit, transfer: transfer, withdraw: withdraw, balance: balance });
     });
 
 })
