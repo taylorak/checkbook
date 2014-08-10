@@ -32,6 +32,7 @@
             </div>
 
             <div class="col-md-9">
+                {{> messages }}
                 <form class="form-signin" role="form" action="/" method="post">
                     <fieldset>
                         <div class="form-group row" >
@@ -66,6 +67,7 @@
                             </div>
                         </div>
 
+                        <input type="hidden" name="_csrf" value="{{ csrf }}">
                         <input id="submitLogin" class="btn btn-lg btn-primary btn-block" type="submit" value="Submit">
                     </fieldset>
                 </form>
@@ -99,8 +101,16 @@
                     <td class="col-md-3">{{ payee }}</td>
                     <td class="col-md-2">{{ amount }}</td>
                     <td class="col-md-2">{{ category }}</td>
-                    <td class="col-md-4">{{{ memo }}}</td>
-                    <td class="col-md-1 text-center"><a class="text-danger" href="/delete/{{ entry_id }}"><span class="glyphicon glyphicon-minus-sign"></span></a></td>
+                    <td class="col-md-4">{{ memo }}</td>
+                    <td class="col-md-1 text-center">
+                        <form class="form-signin" role="form" action="/delete/{{ entry_id }}?_method=DELETE" method="POST">
+                            <fieldset>
+                                <!--<input type="hidden" name="_method" value="delete">-->
+                                <input type="hidden" name="_csrf" value="{{ csrf }}">
+                                <button class="text-danger" type="submit"><span class="glyphicon glyphicon-minus-sign"></span></button>
+                            </fieldset>
+                        </form>
+                    <!--<td class="col-md-1 text-center"><a class="text-danger" href="/delete/{{ entry_id }}"><span class="glyphicon glyphicon-minus-sign"></span></a></td>-->
                 </tr>
                 {{/ rows}}
 

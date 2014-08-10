@@ -4,6 +4,8 @@ var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
+var methodOverride = require('method-override');
+var csrf = require('csurf');
 var bodyParser = require('body-parser');
 var messages = require('./lib/messages');
 var sqlite3 = require('sqlite3').verbose();
@@ -30,12 +32,14 @@ app.use(favicon());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
+app.use(methodOverride('_method'));
 app.use(cookieParser());
 app.use(session({
             resave: false,
             saveUninitialized: false,
             secret: 'keyboard cat'
 }));
+app.use(csrf());
 app.use(require('less-middleware')(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -54,12 +58,12 @@ app.get('/logout', function(req, res, next) {
 })
 app.use('/', routes);
 
-/// catch 404 and forward to error handler
-/**app.use(function(req, res, next) {
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
-});**/
+});
 
 /// error handlers
 
