@@ -24,7 +24,7 @@ Checking connectivity... done.
 $ cd checkbook
 ```  
 
-Install all the modules used by the project using `npm install` from the project's root directory. 
+Install all the modules used by the project using `npm install --python=python2.7` from the project's root directory. 
 
 Create the database that will hold all the user and checkbook information. There should already be a script in the db/ directory that will do the work for you. Run it by executing this command:
 ```
