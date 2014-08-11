@@ -15,12 +15,10 @@ router.route('/')
         req.db.all(stm, function(err, rows) {
             if(err) return next(err);
             if(rows.length > 0) entries = true;
-            var balance = 0;
             for(var i=0; i < rows.length; i++) {
                 rows[i].amount = (rows[i].amount*1.0/100).toFixed(2);
-                balance += rows[i].amount
             }
-            res.render('index', { title: 'Checkbook', entries: entries, rows: rows, all: all, balance: balance});
+            res.render('index', { title: 'Checkbook', entries: entries, rows: rows, all: all});
         });
     })
 
@@ -76,13 +74,11 @@ router.get('/:type', auth, function(req, res, next) {
     req.db.all(stm, function(err, rows) {
         if(err) return next(err);
         if(rows.length > 0) entries = true;
-        var balance = 0;
         for(var i=0; i < rows.length; i++) {
             rows[i].amount = (rows[i].amount*1.0/100).toFixed(2);
-            balance += rows[i].amount
         }
         res.render('index', { title: 'Checkbook', entries: entries, 
-            rows: rows, deposit: deposit, transfer: transfer, withdraw: withdraw, balance: balance });
+            rows: rows, deposit: deposit, transfer: transfer, withdraw: withdraw });
     });
 
 })
