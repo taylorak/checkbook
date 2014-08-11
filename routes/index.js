@@ -49,9 +49,10 @@ router.route('/')
 
 router.delete('/delete/:id', auth, function(req, res, next) {
     var entry_id = req.params.id;
-    var stm = "DELETE FROM checkbook_entry WHERE entry_id=?";
+    var uid = req.session.uid;
+    var stm = "DELETE FROM checkbook_entry WHERE entry_id=? AND user_id=?"; 
     console.log(stm);
-    req.db.run(stm, entry_id, function(err) {
+    req.db.run(stm, entry_id, uid, function(err) {
         if(err) return next(err);
         res.redirect('/');
     });
