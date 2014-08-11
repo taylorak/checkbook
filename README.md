@@ -8,6 +8,7 @@ Install the following before moving on to Installation.
 
 - [Node.js](http://nodejs.org/)
 - [SQLite](https://www.sqlite.org/)
+- [Python 2.7](https://www.python.org/)
 
 ## Installation
 
